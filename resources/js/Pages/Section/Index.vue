@@ -22,8 +22,18 @@ import { Head, Link } from '@inertiajs/inertia-vue3';
                             v-for="section in sections.data"
                             class="border w-[500px] shrink-0 mx-3 border-gray-200 bg-white rounded shadow-sm"
                         >
-                            <div class="w-full p-0 m-0 border-b-4 border-primary-700">
-                                <h3 class="p-3">{{ section.title }}</h3>
+                            <div
+                                class="w-full p-0 m-0 border-b-4 border-primary-700 flex justify-between"
+                            >
+                                <h3 class="p-3 font-bold text-xl">{{ section.title }}</h3>
+                                <div class="flex items-center">
+                                    <Link class="py-3 px-1 font-bold text-xl">
+                                        <i class="far fa-edit"></i>
+                                    </Link>
+                                    <Link class="py-3 px-1 font-bold text-xl">
+                                        <i class="far fa-trash-alt"></i>
+                                    </Link>
+                                </div>
                             </div>
                             <div class="w-full flex flex-col">
                                 <div
