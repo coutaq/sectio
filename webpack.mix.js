@@ -18,10 +18,6 @@ mix.js("resources/js/app.js", "public/js")
         require("tailwindcss"),
         require("autoprefixer"),
     ])
-    .copy(
-        "node_modules/@fortawesome/fontawesome-free/webfonts",
-        "public/webfonts"
-    )
     .webpackConfig(require("./webpack.config"));
 if (mix.inProduction()) {
     mix.version();
