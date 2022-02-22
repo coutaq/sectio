@@ -1,0 +1,42 @@
+created:
+    - app/Http/Controllers/App/Models/SectionController.php
+    - app/Http/Controllers/App/Models/SectionActivityController.php
+    - app/Http/Controllers/App/Models/RoundController.php
+    - app/Http/Controllers/App/Models/RoundActivityController.php
+    - tests/Feature/Http/Controllers/App/Models/SectionControllerTest.php
+    - tests/Feature/Http/Controllers/App/Models/SectionActivityControllerTest.php
+    - tests/Feature/Http/Controllers/App/Models/RoundControllerTest.php
+    - tests/Feature/Http/Controllers/App/Models/RoundActivityControllerTest.php
+    - app/Http/Requests/App\Models/SectionStoreRequest.php
+    - app/Http/Requests/App\Models/SectionUpdateRequest.php
+    - app/Http/Requests/App\Models/SectionActivityStoreRequest.php
+    - app/Http/Requests/App\Models/SectionActivityUpdateRequest.php
+    - app/Http/Requests/App\Models/RoundStoreRequest.php
+    - app/Http/Requests/App\Models/RoundUpdateRequest.php
+    - app/Http/Requests/App\Models/RoundActivityStoreRequest.php
+    - app/Http/Requests/App\Models/RoundActivityUpdateRequest.php
+    - resources/views/section/index.blade.php
+    - resources/views/section/create.blade.php
+    - resources/views/section/show.blade.php
+    - resources/views/section/edit.blade.php
+    - resources/views/sectionActivity/index.blade.php
+    - resources/views/sectionActivity/create.blade.php
+    - resources/views/sectionActivity/show.blade.php
+    - resources/views/sectionActivity/edit.blade.php
+    - resources/views/round/index.blade.php
+    - resources/views/round/create.blade.php
+    - resources/views/round/show.blade.php
+    - resources/views/round/edit.blade.php
+    - resources/views/roundActivity/index.blade.php
+    - resources/views/roundActivity/create.blade.php
+    - resources/views/roundActivity/show.blade.php
+    - resources/views/roundActivity/edit.blade.php
+updated:
+    - routes/web.php
+models:
+    User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, role_id: 'biginteger unsigned', remember_token: 'string:100 nullable' }
+    Section: { title: 'string:150', description: 'string:150', relationships: { hasMany: SectionActivity, belongsToMany: \App\Models\User } }
+    SectionActivity: { title: 'string:150', description: 'string:150', date: date, time: time, section_id: foreign, relationships: { belongsTo: Section } }
+    Round: { title: 'string:150', description: 'string:150', relationships: { hasMany: RoundActivity, belongsToMany: \App\Models\User } }
+    RoundActivity: { title: 'string:150', description: 'string:150', date: date, time: time, round_id: foreign, relationships: { belongsTo: Section } }
+    Role: { title: 'string:150', slug: 'string:150' }

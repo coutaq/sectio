@@ -1,0 +1,9 @@
+controllers:
+  /App/Models/Section: 
+    resource: web
+  /App/Models/SectionActivity: 
+    resource: web
+  /App/Models/Round: 
+    resource: web
+  /App/Models/RoundActivity: 
+    resource: web

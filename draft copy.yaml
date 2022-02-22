@@ -1,0 +1,41 @@
+models:
+  Section:
+    title: string:150 
+    description: string:150
+    relationships:
+      hasMany: SectionActivity
+      belongsToMany: \App\Models\User
+
+  SectionActivity:
+    title: string:150
+    description: string:150
+    date: date
+    time: time
+    section_id: foreign
+    relationships:
+      belongsTo: Section
+
+  Round:
+    title: string:150 
+    description: string:150
+    relationships:
+      hasMany: RoundActivity
+      belongsToMany: \App\Models\User
+
+  RoundActivity:
+    title: string:150
+    description: string:150
+    date: date
+    time: time
+    round_id: foreign
+    relationships:
+      belongsTo: Section
+  Role:
+    title: string:150
+    slug: string:150
+
+Controllers:
+  Section: resource:api
+  SectionActivity: resource:api
+  Round: resource:api
+  RoundActivity: resource:api
