@@ -19,7 +19,8 @@ class SectionResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'sectionActivities' => SectionActivityCollection::make($this->whenLoaded('sectionActivities')),
-            'users' => UserCollection::make($this->whenLoaded('users')),
+            'admins' => UserCollection::make($this->whenLoaded('admins')),
+            'pupils' => UserCollection::make($this->whenLoaded('pupils')),
         ];
     }
 }

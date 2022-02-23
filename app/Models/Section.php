@@ -33,8 +33,12 @@ class Section extends Model
         return $this->hasMany(SectionActivity::class);
     }
 
-    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function admins(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->join('roles', 'users.role_id', '=', 'roles.id')->where('slug','admin');
+    }
+    public function pupils(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(User::class)->join('roles', 'users.role_id', '=', 'roles.id')->where('slug','pupil');
     }
 }

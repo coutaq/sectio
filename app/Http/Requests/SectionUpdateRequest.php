@@ -24,7 +24,8 @@ class SectionUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'section' => ['required'],
+            'title' => ['required'],
+            'description' => ['required'],
         ];
     }
 }

@@ -40,3 +40,8 @@ Route::resource('round', App\Http\Controllers\RoundController::class);
 
 Route::resource('round-activity', App\Http\Controllers\RoundActivityController::class);
 
+Route::put('section/{section_id}/removeAdmin', [ App\Http\Controllers\SectionController::class, 'removeAdmin'])->name('section/remove-admin');
+Route::put('section/{section_id}/addAdmins', [ App\Http\Controllers\SectionController::class, 'addAdmins'])->name('section/add-admins');
+
+Route::put('section/{section_id}/removePupil', [ App\Http\Controllers\SectionController::class, 'removePupil'])->name('section/remove-pupil');
+Route::put('section/{section_id}/addPupils', [ App\Http\Controllers\SectionController::class, 'addPupils'])->name('section/add-pupils');

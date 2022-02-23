@@ -60,9 +60,9 @@ function submit() {
                             />
                         </div>
                         <div class="flex items-center border-b border-primary-700 py-1 my-2">
-                            <input
-                                v-model="form.description"
-                                class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none focus:shadow-none ring-0 focus:ring-0"
+                            <textarea
+                                v-model="section.description"
+                                class="appearance-none bg-transparent border-none w-full resize-none h-40 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none focus:shadow-none ring-0 focus:ring-0"
                                 type="text"
                                 placeholder="Описание"
                             />

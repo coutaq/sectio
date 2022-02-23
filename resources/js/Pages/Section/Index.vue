@@ -1,6 +1,7 @@
 <script setup>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import { Head, Link } from '@inertiajs/inertia-vue3';
+const props = defineProps(['sections'])
 </script>
 
 <template>
@@ -19,7 +20,7 @@ import { Head, Link } from '@inertiajs/inertia-vue3';
                     </div>
                     <div class="p-6 overflow-hidden flex" v-dragscroll.x>
                         <div
-                            v-for="section in sections.data"
+                            v-for="section in props.sections.data"
                             class="border w-[500px] shrink-0 mx-3 border-gray-200 bg-white rounded-lg shadow"
                         >
                             <div
@@ -27,7 +28,10 @@ import { Head, Link } from '@inertiajs/inertia-vue3';
                             >
                                 <h3 class="p-3 font-bold text-xl">{{ section.title }}</h3>
                                 <div class="flex items-center px-2">
-                                    <Link class="py-3 px-1 text-xl">
+                                    <Link
+                                        :href="route('section.edit', section)"
+                                        class="py-3 px-1 text-xl"
+                                    >
                                         <div
                                             class="aspect-square w-10 bg-white border-2 border-primary-200 rounded p-2 flex justify-center shadow"
                                         >
@@ -111,12 +115,3 @@ import { Head, Link } from '@inertiajs/inertia-vue3';
         </div>
     </BreezeAuthenticatedLayout>
 </template>
-
-<script>
-export default {
-    props: ['sections'],
-    mounted() {
-        console.log(this.sections.data[0])
-    }
-}
-</script>
