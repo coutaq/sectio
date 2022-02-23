@@ -83,7 +83,7 @@ import { Head, Link } from '@inertiajs/inertia-vue3';
                         </div>
                         <Link
                             :href="route('section.create')"
-                            class="border w-[500px] shrink-0 mx-3 border-gray-200 bg-white rounded-lg shadow flex justify-center"
+                            class="border w-[500px] shrink-0 h-[100px] mx-3 border-gray-200 bg-white rounded-lg shadow flex justify-center items-center"
                         >
                             <svg
                                 width="80"

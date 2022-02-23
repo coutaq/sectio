@@ -8,6 +8,7 @@ use App\Http\Resources\SectionActivityCollection;
 use App\Http\Resources\SectionActivityResource;
 use App\Models\SectionActivity;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class SectionActivityController extends Controller
 {
@@ -21,7 +22,10 @@ class SectionActivityController extends Controller
 
         return new SectionActivityCollection($sectionActivities);
     }
-
+    public function create(Request $request)
+    {
+        return Inertia::render('SectionActivity/Create');   
+    }
     /**
      * @param \App\Http\Requests\SectionActivityStoreRequest $request
      * @return \App\Http\Resources\SectionActivityResource
