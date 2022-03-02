@@ -1,19 +1,19 @@
 <script setup>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import { Head, Link } from '@inertiajs/inertia-vue3';
-import { reactive } from 'vue'
+import { reactive, ref, watchEffect } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
-const form = reactive({
-    title: null,
-    description: null,
-})
-
+const props = defineProps(['activity'])
+const activity = reactive(props.activity.data)
+// console.log(props.activity)
 function submit() {
-    Inertia.post(route('section.store'), form)
+    Inertia.put(route('section-activity.update', activity), activity)
 }
+
+console.log(activity.title)
 </script>
 
-<template>
+        <template>
     <Head title="Dashboard" />
 
     <BreezeAuthenticatedLayout>
@@ -40,20 +40,24 @@ function submit() {
                         </defs>
                     </svg>
                 </Link>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">Новая секция</h2>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    Редактировании задачи
+                    <b>{{ activity.title }}</b>
+                </h2>
             </div>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <h2 class="text-2xl text-bold text-center p-3 pt-6">Информация о задаче</h2>
                     <form
                         @submit.prevent="submit"
                         class="w-full flex items-center flex-col p-4 py-6"
                     >
                         <div class="flex items-center border-b border-primary-700 py-1 my-2">
                             <input
-                                v-model="form.title"
+                                v-model="activity.title"
                                 class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none focus:shadow-none ring-0 focus:ring-0"
                                 type="text"
                                 placeholder="Наименование"
@@ -61,7 +65,7 @@ function submit() {
                         </div>
                         <div class="flex items-center border-b border-primary-700 py-1 my-2">
                             <textarea
-                                v-model="form.description"
+                                v-model="activity.description"
                                 class="appearance-none bg-transparent border-none w-full resize-none h-40 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none focus:shadow-none ring-0 focus:ring-0"
                                 type="text"
                                 placeholder="Описание"

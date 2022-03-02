@@ -125,7 +125,7 @@ class SectionController extends Controller
     public function destroy(Request $request, Section $section)
     {
         $section->delete();
-
-        return response()->noContent();
+        // dd('dsadsa');
+        return Redirect::route('section.index');
     }
 }

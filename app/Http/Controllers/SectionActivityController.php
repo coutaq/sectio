@@ -36,6 +36,13 @@ class SectionActivityController extends Controller
 
         return new SectionActivityResource($sectionActivity);
     }
+    public function edit(Request $request, SectionActivity $activity)
+    {
+        $activity    = new SectionActivityResource(SectionActivity::find($request->id));
+        // dd($activity);
+        return Inertia::render('SectionActivity/Edit', compact('activity'));   
+    }
+
 
     /**
      * @param \Illuminate\Http\Request $request

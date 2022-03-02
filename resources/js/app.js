@@ -4,6 +4,7 @@ import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/inertia-vue3";
 import { InertiaProgress } from "@inertiajs/progress";
 import { dragscrollNext } from "vue-dragscroll";
+import "vue3-date-time-picker/dist/main.css";
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
 

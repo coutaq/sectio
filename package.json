@@ -27,6 +27,7 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.4",
-        "vue-dragscroll": "^3.0.1"
+        "vue-dragscroll": "^3.0.1",
+        "vue3-date-time-picker": "^2.7.0"
     }
 }

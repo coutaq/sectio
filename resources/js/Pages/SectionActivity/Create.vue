@@ -3,11 +3,13 @@ import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import { reactive } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
+import Datepicker from 'vue3-date-time-picker';
 const form = reactive({
     title: null,
     description: null,
 })
-
+const ActionRow = defineAsyncComponent(() => import('./ActionRowCustom.vue'));
+const date = ref();
 function submit() {
     Inertia.post(route('section.store'), form)
 }
@@ -74,6 +76,10 @@ function submit() {
                             >Сохранить</button>
                         </div>
                     </form>
+
+                    <div class="w-full flex items-center flex-col p-4 py-6">
+                        <Datepicker v-model="date" :action-row-component="actionRow" />
+                    </div>
                 </div>
             </div>
         </div>

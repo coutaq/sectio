@@ -39,7 +39,12 @@ const props = defineProps(['sections'])
                                         </div>
                                     </Link>
 
-                                    <Link class="py-3 px-1 text-xl">
+                                    <Link
+                                        :href="route('section.destroy', section)"
+                                        method="delete"
+                                        as="button"
+                                        class="py-3 px-1 text-xl"
+                                    >
                                         <div
                                             class="aspect-square w-10 bg-white border-2 border-primary-200 rounded p-2 flex justify-center shadow"
                                         >
@@ -51,9 +56,35 @@ const props = defineProps(['sections'])
                             <div class="w-full flex flex-col">
                                 <div
                                     v-for="activity in section.sectionActivities.data"
-                                    class="border shrink-0 m-3 p-1 border-gray-200 bg-white rounded shadow-lg"
+                                    class="border shrink-0 m-3 p-2 border-gray-200 bg-white rounded shadow-lg flex justify-between"
                                 >
-                                    <p>{{ activity.title }}</p>
+                                    <span class="text-xl">{{ activity.title }}</span>
+                                    <div class="flex items-center px-2">
+                                        <Link
+                                            :href="route('section-activity.edit', activity)"
+                                            :data="{ 'id': activity.id }"
+                                            class="py-3 px-1 text-xl"
+                                        >
+                                            <div
+                                                class="aspect-square w-10 bg-white border-2 border-primary-200 rounded p-2 flex justify-center shadow"
+                                            >
+                                                <i class="far fa-edit text-primary-900"></i>
+                                            </div>
+                                        </Link>
+
+                                        <Link
+                                            :href="route('section-activity.destroy', activity)"
+                                            method="delete"
+                                            as="button"
+                                            class="py-3 px-1 text-xl"
+                                        >
+                                            <div
+                                                class="aspect-square w-10 bg-white border-2 border-primary-200 rounded p-2 flex justify-center shadow"
+                                            >
+                                                <i class="far fa-trash-alt text-primary-900"></i>
+                                            </div>
+                                        </Link>
+                                    </div>
                                 </div>
                                 <div
                                     class="border shrink-0 m-3 p-1 border-gray-200 bg-white rounded shadow-lg"
