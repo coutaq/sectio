@@ -29,7 +29,7 @@ class SectionActivity extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'date' => 'date',
+        // 'date' => 'date',
         'section_id' => 'integer',
     ];
 

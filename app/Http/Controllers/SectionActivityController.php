@@ -7,8 +7,12 @@ use App\Http\Requests\SectionActivityUpdateRequest;
 use App\Http\Resources\SectionActivityCollection;
 use App\Http\Resources\SectionActivityResource;
 use App\Models\SectionActivity;
+use App\Notifications\ActionTime;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;    
+use Illuminate\Support\Facades\Notification;
 
 class SectionActivityController extends Controller
 {
@@ -24,7 +28,10 @@ class SectionActivityController extends Controller
     }
     public function create(Request $request)
     {
-        return Inertia::render('SectionActivity/Create');   
+        
+        $section_id = $request->section_id;
+        
+        return Inertia::render('SectionActivity/Create', compact('section_id'));   
     }
     /**
      * @param \App\Http\Requests\SectionActivityStoreRequest $request
@@ -32,9 +39,17 @@ class SectionActivityController extends Controller
      */
     public function store(SectionActivityStoreRequest $request)
     {
-        $sectionActivity = SectionActivity::create($request->validated());
-
-        return new SectionActivityResource($sectionActivity);
+        $validated = $request->validated();
+        $format1 = 'Y-m-d';
+        $format2 = 'H:i:s'; 
+        $date = Carbon::parse($request['date'])->format($format1);
+        $time = Carbon::parse($request['date'])->format($format2);
+        $validated['date'] = $date;
+        $validated['time'] = $time;
+        $sectionActivity = SectionActivity::create($validated);
+        $users = $sectionActivity->section->users;
+        Notification::send($users, new ActionTime($sectionActivity,Carbon::parse($request['date'])));
+        return Redirect::route('section.index');
     }
     public function edit(Request $request, SectionActivity $activity)
     {
@@ -61,9 +76,17 @@ class SectionActivityController extends Controller
      */
     public function update(SectionActivityUpdateRequest $request, SectionActivity $sectionActivity)
     {
-        $sectionActivity->update($request->validated());
+        $validated = $request->validated();
+        $format1 = 'Y-m-d';
+        $format2 = 'H:i:s'; 
+        $date = Carbon::parse($request['date'])->format($format1);
+        $time = Carbon::parse($request['date'])->format($format2);
+        $validated['date'] = $date;
+        $validated['time'] = $time;
+        $sectionActivity->update($validated);
 
-        return new SectionActivityResource($sectionActivity);
+     
+        return Redirect::route('section.index');
     }
 
     /**
@@ -75,6 +98,6 @@ class SectionActivityController extends Controller
     {
         $sectionActivity->delete();
 
-        return response()->noContent();
+        return Redirect::route('section.index');
     }
 }

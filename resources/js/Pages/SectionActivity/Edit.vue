@@ -1,19 +1,23 @@
 <script setup>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import { Head, Link } from '@inertiajs/inertia-vue3';
-import { reactive, ref, watchEffect } from 'vue'
+import { reactive, defineProps } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
+import Datepicker from 'vue3-date-time-picker';
 const props = defineProps(['activity'])
-const activity = reactive(props.activity.data)
-// console.log(props.activity)
-function submit() {
-    Inertia.put(route('section-activity.update', activity), activity)
-}
+const form = reactive({
+    title: props.activity.data.title,
+    description: props.activity.data.description,
+    date: new Date(props.activity.data.date + ", " + props.activity.data.time),
+    section_id: props.activity.data.section_id
+})
 
-console.log(activity.title)
+function submit() {
+    Inertia.put(route('section-activity.update', props.activity.data), form)
+}
 </script>
 
-        <template>
+<template>
     <Head title="Dashboard" />
 
     <BreezeAuthenticatedLayout>
@@ -40,37 +44,43 @@ console.log(activity.title)
                         </defs>
                     </svg>
                 </Link>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    Редактировании задачи
-                    <b>{{ activity.title }}</b>
-                </h2>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">Новая задача</h2>
             </div>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <h2 class="text-2xl text-bold text-center p-3 pt-6">Информация о задаче</h2>
                     <form
                         @submit.prevent="submit"
                         class="w-full flex items-center flex-col p-4 py-6"
                     >
+                        <span class="text-xl text-center m-2">Информация о задаче</span>
                         <div class="flex items-center border-b border-primary-700 py-1 my-2">
                             <input
-                                v-model="activity.title"
+                                v-model="form.title"
                                 class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none focus:shadow-none ring-0 focus:ring-0"
                                 type="text"
                                 placeholder="Наименование"
                             />
                         </div>
                         <div class="flex items-center border-b border-primary-700 py-1 my-2">
-                            <textarea
-                                v-model="activity.description"
-                                class="appearance-none bg-transparent border-none w-full resize-none h-40 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none focus:shadow-none ring-0 focus:ring-0"
+                            <input
+                                v-model="form.description"
+                                class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none focus:shadow-none ring-0 focus:ring-0"
                                 type="text"
                                 placeholder="Описание"
                             />
                         </div>
+
+                        <span class="text-xl text-center m-2">Дата и время</span>
+                        <Datepicker
+                            :internalModelValue="form.date"
+                            locale="ru-RU"
+                            v-model="form.date"
+                            selectText="Выбрать"
+                            cancelText="Отмена"
+                        />
                         <div class="px-2 py-4 my-2">
                             <button
                                 class="bg-primary-700 text-white p-2 rounded"

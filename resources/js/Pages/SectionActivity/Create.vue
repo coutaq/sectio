@@ -1,17 +1,19 @@
 <script setup>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import { Head, Link } from '@inertiajs/inertia-vue3';
-import { reactive } from 'vue'
+import { reactive, defineAsyncComponent, defineProps } from 'vue'
 import { Inertia } from '@inertiajs/inertia'
 import Datepicker from 'vue3-date-time-picker';
+const props = defineProps(['section_id'])
 const form = reactive({
     title: null,
     description: null,
+    date: '',
+    section_id: props.section_id
 })
-const ActionRow = defineAsyncComponent(() => import('./ActionRowCustom.vue'));
-const date = ref();
+// const ActionRow = defineAsyncComponent(() => import('@/Components/ActionRow.vue'));
 function submit() {
-    Inertia.post(route('section.store'), form)
+    Inertia.post(route('section-activity.store'), form)
 }
 </script>
 
@@ -42,7 +44,7 @@ function submit() {
                         </defs>
                     </svg>
                 </Link>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">Новая секция</h2>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">Новая задача</h2>
             </div>
         </template>
 
@@ -53,6 +55,7 @@ function submit() {
                         @submit.prevent="submit"
                         class="w-full flex items-center flex-col p-4 py-6"
                     >
+                        <span class="text-xl text-center m-2">Информация о задаче</span>
                         <div class="flex items-center border-b border-primary-700 py-1 my-2">
                             <input
                                 v-model="form.title"
@@ -69,6 +72,14 @@ function submit() {
                                 placeholder="Описание"
                             />
                         </div>
+
+                        <span class="text-xl text-center m-2">Дата и время</span>
+                        <Datepicker
+                            locale="ru-RU"
+                            v-model="form.date"
+                            selectText="Выбрать"
+                            cancelText="Отмена"
+                        />
                         <div class="px-2 py-4 my-2">
                             <button
                                 class="bg-primary-700 text-white p-2 rounded"
@@ -76,10 +87,6 @@ function submit() {
                             >Сохранить</button>
                         </div>
                     </form>
-
-                    <div class="w-full flex items-center flex-col p-4 py-6">
-                        <Datepicker v-model="date" :action-row-component="actionRow" />
-                    </div>
                 </div>
             </div>
         </div>

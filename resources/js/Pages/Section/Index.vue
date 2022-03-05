@@ -56,13 +56,16 @@ const props = defineProps(['sections'])
                             <div class="w-full flex flex-col">
                                 <div
                                     v-for="activity in section.sectionActivities.data"
-                                    class="border shrink-0 m-3 p-2 border-gray-200 bg-white rounded shadow-lg flex justify-between"
+                                    class="border shrink-0 m-3 p-2 border-gray-200 bg-white rounded shadow-lg flex flex-col justify-start relative"
                                 >
-                                    <span class="text-xl">{{ activity.title }}</span>
-                                    <div class="flex items-center px-2">
+                                    <span class="text-xl p-2">{{ activity.title }}</span>
+
+                                    <div
+                                        class="flex items-center px-2 col-span-1 absolute top-0 right-0"
+                                    >
                                         <Link
                                             :href="route('section-activity.edit', activity)"
-                                            :data="{ 'id': activity.id }"
+                                            :data="{ 'id': activity.id, 'section_id': section.id }"
                                             class="py-3 px-1 text-xl"
                                         >
                                             <div
@@ -85,6 +88,9 @@ const props = defineProps(['sections'])
                                             </div>
                                         </Link>
                                     </div>
+                                    <div
+                                        class="w-full p-2"
+                                    >{{ (new Date(activity.date + ', ' + activity.time)).toLocaleString('ru', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' }) }}</div>
                                 </div>
                                 <div
                                     class="border shrink-0 m-3 p-1 border-gray-200 bg-white rounded shadow-lg"
@@ -92,6 +98,7 @@ const props = defineProps(['sections'])
                                     <Link
                                         class="w-full flex justify-center"
                                         :href="route('section-activity.create')"
+                                        :data="{ 'section_id': section.id }"
                                     >
                                         <svg
                                             width="40"

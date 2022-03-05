@@ -24,7 +24,10 @@ class SectionActivityUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sectionActivity' => ['required'],
+            'date' => ['required'],
+            'title' => ['required'],
+            'description' => ['required'],
+            'section_id' => 'required'
         ];
     }
 }

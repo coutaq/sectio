@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\IndexController;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -14,7 +17,6 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -23,25 +25,20 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-Route::middleware(['auth', 'verified'])->group(function(){
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
-});
-
 require __DIR__.'/auth.php';
+Route::middleware(['auth', 'verified'])->group(function(){
+    Route::get('/dashboard', IndexController::class)->name('dashboard');
+    Route::resource('section', App\Http\Controllers\SectionController::class);
 
+    Route::resource('section-activity', App\Http\Controllers\SectionActivityController::class);
 
-Route::resource('section', App\Http\Controllers\SectionController::class);
+    Route::resource('round', App\Http\Controllers\RoundController::class);
 
-Route::resource('section-activity', App\Http\Controllers\SectionActivityController::class);
+    Route::resource('round-activity', App\Http\Controllers\RoundActivityController::class);
 
-Route::resource('round', App\Http\Controllers\RoundController::class);
+    Route::put('section/{section_id}/removeAdmin', [ App\Http\Controllers\SectionController::class, 'removeAdmin'])->name('section/remove-admin');
+    Route::put('section/{section_id}/addAdmins', [ App\Http\Controllers\SectionController::class, 'addAdmins'])->name('section/add-admins');
 
-Route::resource('round-activity', App\Http\Controllers\RoundActivityController::class);
-
-Route::put('section/{section_id}/removeAdmin', [ App\Http\Controllers\SectionController::class, 'removeAdmin'])->name('section/remove-admin');
-Route::put('section/{section_id}/addAdmins', [ App\Http\Controllers\SectionController::class, 'addAdmins'])->name('section/add-admins');
-
-Route::put('section/{section_id}/removePupil', [ App\Http\Controllers\SectionController::class, 'removePupil'])->name('section/remove-pupil');
-Route::put('section/{section_id}/addPupils', [ App\Http\Controllers\SectionController::class, 'addPupils'])->name('section/add-pupils');
+    Route::put('section/{section_id}/removePupil', [ App\Http\Controllers\SectionController::class, 'removePupil'])->name('section/remove-pupil');
+    Route::put('section/{section_id}/addPupils', [ App\Http\Controllers\SectionController::class, 'addPupils'])->name('section/add-pupils');
+});
